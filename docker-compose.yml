@@ -1,0 +1,37 @@
+version: '3.8'
+
+services:
+  postgres:
+    container_name: postgresdb
+    image: postgres
+    restart: always
+    env_file:
+      - .env
+    environment:
+      POSTGRES_PASSWORD: ${POSTGRES_PASS}
+    ports:
+      - 6543:${POSTGRES_PORT}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  myapp:
+    container_name: app
+    build: .
+    command:
+      - /bin/sh
+      - -c
+      - |
+        cd vpn_service
+        python manage.py collectstatic --noinput
+        python manage.py makemigrations
+        python manage.py migrate
+        python manage.py runserver 0.0.0.0:8000
+    ports:
+      - "8000:8000"
+    depends_on:
+      - postgres
+    volumes:
+      - .:/VpnService/
+
+volumes:
+  postgres_data:

@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>VPN Statistics</h1>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Site</th>
+            <th>Hits</th>
+            <th>Data Sent</th>
+            <th>Data Received</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for site in sites %}
+            <tr>
+                <td>{{ site.name }}</td>
+                <td>{{ site.statistics.hits }}</td>
+                <td>{{ site.statistics.data_sent }} bytes</td>
+                <td>{{ site.statistics.data_received }} bytes</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

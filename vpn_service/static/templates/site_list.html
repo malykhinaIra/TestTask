@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% if user.is_authenticated %}
+<h1>Site List</h1>
+<ul class="list-group">
+    {% for site in sites %}
+        <li class="list-group-item"> {{ site.name }} - <a href="{% url 'proxy:proxy_site' site.name %}" target="_blank">Proxy</a></li>
+    {% endfor %}
+</ul>
+<br>
+<a href="{% url 'proxy:create_site' %}">Create Site</a>
+{% else %}
+<a href="{% url 'users:login' %}">Log In to see your sites</a>
+{% endif %}
+{% endblock %}

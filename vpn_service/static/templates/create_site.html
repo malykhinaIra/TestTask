@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Create Site</h1>
+<form method="post" action="{% url 'proxy:create_site' %}">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type='submit' class="btn btn-secondary" value="Create"/>
+</form>
+<a href="{% url 'proxy:site_list' %}">Back to Site List</a>
+{% endblock %}
